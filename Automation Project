@@ -1,0 +1,94 @@
+package test;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class WorkingWithForms {
+
+	public static void main(String[] args) {
+		System.setProperty("webdriver.chrome.driver","C:\\Users\\ROHINI\\Desktop\\Test\\chromedriver_win32\\chromedriver.exe");
+		WebDriver driver=new ChromeDriver();  
+		driver.get("file:///C:/Users/ROHINI/Desktop/HTML%20Pages/WorkingWithForms.html");
+		driver.navigate().refresh();
+		
+		
+		driver.findElement(By.id("txtUserName")).sendKeys("Rohini");
+		driver.findElement(By.id("txtPwd")).sendKeys("rohini@123");
+		driver.findElement(By.className("Format")).sendKeys("abc01");
+		driver.findElement(By.cssSelector("input.Format1")).sendKeys("Rohini");
+		
+		driver.findElement(By.name("txtLN")).sendKeys("Pooja");
+		
+		//Find Gender radio button and enter value
+		driver.findElement(By.cssSelector("input[value='Female']")).click();
+		
+		//Find Date Of Birth textbox and enter value
+		driver.findElement(By.name("DOB")).sendKeys("01/01/1999");
+		
+		//Find Email textbox and enter value
+		driver.findElement(By.name("Email")).sendKeys("rukirde@gmail.com");
+		
+		//Find Address textbox and enter value
+		driver.findElement(By.name("Address")).sendKeys("Sangamner");
+
+		Select drpCity = new Select(driver.findElement(By.name("City")));
+		//drpCity.selectByVisibleText("Pune");
+		
+		drpCity.selectByVisibleText("Pune");
+		drpCity.selectByIndex(1);
+		drpCity.selectByIndex(2);
+		
+		//Find Phone textbox and enter value
+		driver.findElement(By.xpath("//html/body/form/table/tbody/tr[11]/td[2]/input")).sendKeys("8768762312");
+		
+		List<WebElement> element = driver.findElements(By.name("chkHobbies"));
+		
+		for (WebElement webElement : element)
+		{
+			webElement.click();
+			
+			try
+			{
+				Thread.sleep(500);
+			}
+			catch(InterruptedException ex)
+			{
+				System.out.println(ex.getMessage());
+			}			
+		}
+		
+        		//Examples of Get commands
+		
+				String Title;
+				Title=driver.getTitle();
+				System.out.println("The page title is :" + Title);
+				
+				Boolean b =  driver.getPageSource().contains("Email Registration Form");
+				
+				if(b==true)
+				{
+					System.out.println("U got the right title");
+				}
+				else
+				{
+					System.out.println("Sorry .... Wrong title");
+				}
+
+				String currentURL;
+				currentURL = driver.getCurrentUrl();
+				System.out.println("The page current URL is :" + currentURL);
+						
+				//Find Submit button
+				driver.findElement(By.name("submit")).click();
+				driver.close();
+				//driver.quit();
+	}
+
+		
+	}
+
